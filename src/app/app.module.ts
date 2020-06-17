@@ -29,6 +29,8 @@ import { LoginComponent } from './login/login.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
 import { CustomMinValidatorDirective } from './custom-min-validator.directive';
+import { ProductFilterComponent } from './product/product-filter/product-filter.component';
+import { ProductCardComponent } from './product-card/product-card.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { CustomMinValidatorDirective } from './custom-min-validator.directive';
     AdminOrdersComponent,
     LoginComponent,
     ProductFormComponent,
-    CustomMinValidatorDirective
+    CustomMinValidatorDirective,
+    ProductFilterComponent,
+    ProductCardComponent
     
   ],
   imports: [

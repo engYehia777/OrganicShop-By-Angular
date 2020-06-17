@@ -23,7 +23,8 @@ export class ProductFormComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
-    this.categories$ = category.getCategories();
+    this.categories$ = category.getAll();
+    console.log(this.categories$);
 
     this.id = this.activatedRoute.snapshot.paramMap.get('id')
     if (this.id) {
