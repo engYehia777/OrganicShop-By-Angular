@@ -1,3 +1,5 @@
+import { ProductService } from './product.service';
+import { CategoryService } from './category.service';
 import { AdminAuthGuard as AdminAuthGuard } from './admin-auth-guard.service';
 import { UserService } from './user.service';
 import { AuthGuard as AuthGuard } from './auth-guard.service';
@@ -8,6 +10,9 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
+import { FormsModule } from "@angular/forms";
+import { CustomFormsModule } from 'ng2-validation'
+import { DataTablesModule } from 'angular-datatables';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,6 +27,8 @@ import { AdminProductsComponent } from './admin/admin-products/admin-products.co
 import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
 import { LoginComponent } from './login/login.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ProductFormComponent } from './admin/product-form/product-form.component';
+import { CustomMinValidatorDirective } from './custom-min-validator.directive';
 
 @NgModule({
   declarations: [
@@ -35,21 +42,30 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MyOrdersComponent,
     AdminProductsComponent,
     AdminOrdersComponent,
-    LoginComponent
+    LoginComponent,
+    ProductFormComponent,
+    CustomMinValidatorDirective
+    
   ],
   imports: [
     BrowserModule,
+    DataTablesModule,
+    FormsModule,
+    CustomFormsModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     NgbModule
+   
   ],
   providers: [
     AuthService,
     AuthGuard,
     UserService,
-    AdminAuthGuard
+    AdminAuthGuard,
+    CategoryService,
+    ProductService
     ],
   bootstrap: [AppComponent]
 })

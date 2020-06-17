@@ -11,16 +11,19 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'OrganicShop';
 
-  constructor(private UserService: UserService, private auth: AuthService, private router: Router){
+  constructor(private UserService: UserService, private auth: AuthService, private router: Router) {
     //redirect user after login to the previous url 
     auth.user$.subscribe(user => {
-      if(user){
-        // attention every time user loged in it goes to save or update his info 
-        UserService.Save(user);
+      if (!user) return;
+      // attention every time user loged in it goes to save or update his info 
+      UserService.Save(user);
 
-        let returnUrl = localStorage.getItem('returnUrl');
-        this.router.navigateByUrl(returnUrl);
-      }
+      let returnUrl = localStorage.getItem('returnUrl');
+      if (!returnUrl) return;
+
+      localStorage.removeItem('returnUrl');
+      this.router.navigateByUrl(returnUrl);
+
     });
   }
 }
