@@ -1,6 +1,8 @@
+import { Subscription } from 'rxjs';
+import { ShoppingCartService } from './../shopping-cart.service';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from './../product.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Product } from '../models/product';
 
 @Component({
@@ -8,19 +10,22 @@ import { Product } from '../models/product';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css']
 })
-export class ProductsComponent {
+export class ProductsComponent implements OnInit, OnDestroy {
 
   products: Product[] = [];
   filterdProducts: Product[];
   category: string;
+  cart : any;
+  subscription : Subscription;
 
-  constructor(private productService: ProductService, activatedRoute: ActivatedRoute) {
+  constructor(private productService: ProductService, activatedRoute: ActivatedRoute,private shoppingCartService :ShoppingCartService) {
+    
     
     this.productService.getAll().subscribe(p => {
       this.products = this.filterdProducts = p;
 
       activatedRoute.queryParamMap.subscribe(params => {
-        this.category = params.get('category');
+        this.category = params.get('category'); 
 
         this.filterdProducts = (this.category) ?
           this.products.filter(p => p.category === this.category) :
@@ -30,5 +35,12 @@ export class ProductsComponent {
     });
     
 
+  }
+
+  async ngOnInit() {
+    this.subscription=(await this.shoppingCartService.getCart()).subscribe(cart => {this.cart= cart;});
+  }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

@@ -2,10 +2,16 @@ import { Product } from './product';
 
 export class ProductModel implements Product {
     constructor() {
+        this.key;
         this.title='';
         this.price=0;
         this.category='';
         this.imageUrl='';
+    }
+    
+    private _key : string;
+    public get key() : string {
+        return this._key;
     }
     
     private _title : string;
